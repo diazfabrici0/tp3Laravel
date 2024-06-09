@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,11 +18,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::controller(CategoryController::class)->group(function(){
-    Route::get('category/','getIndex');
-    Route::get('category/show/{id}', 'getShow');
-    Route::get('category/create', 'getCreate');
-    Route::get('category/edit/{id}',  'getEdit');   
+Route::controller(PostController::class)->group(function(){
+    Route::get('posts/','getIndex')->name('posts.index');
+    Route::get('posts/show/{post}', 'show')->name('posts.show');
+    Route::get('posts/create', 'getCreate')->name('posts.create');
+    Route::post('posts.create', 'store')->name('posts.store');
+    Route::get('posts/edit/{id}',  'getEdit')->name('posts.edit');
+    Route::get('posts/myPosts', 'getMyPosts')->name('posts.myPosts');
+    Route::post('posts/eliminar/{postId}', 'eliminar')->name('posts.eliminar'); 
 });
+
+
 
 require __DIR__.'/auth.php';
