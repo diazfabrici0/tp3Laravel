@@ -63,8 +63,9 @@ class PostController extends Controller
 
         $posts = Post::where('idUserPoster', $userId)->where('habilitated', true)->orderBy('created_at', 'desc')->get();
         $users = User::all();
+        $categories = Categorias::all();
 
-        return view('posts.myPosts', compact('posts', 'users'));
+        return view('posts.myPosts', compact('posts', 'users', 'categories'));
 
     }
 

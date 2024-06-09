@@ -1,31 +1,42 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight py-2">
-            {{ __('My Posts') }}
-        </h2>
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                {{ __('MyPosts') }}
+            </h2>
     </x-slot>
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white border mb-4 dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 @foreach ($posts as $post)
-                    <div class="shadow-2xl mb-4 rounded-lg p-4 bg-white dark:bg-gray-800">
-                        <p class="text-xs text-gray-900 dark:text-white">ID Post: {{ $post->idPost }}</p>
+                        <p class="px-4 py-2 text-xs text-gray-900 dark:text-white text-left">ID Post: {{ $post->idPost }}</p>
                         @php
                             $nombreUser = $users->firstWhere('id', $post->idUserPoster)->name ?? 'Usuario desconocido';
+
+                            $cantCategorias = count($categories);
+                                        $idCategoriaPost = $post->idCategory;
+
+                                        for ($i=0; $i < $cantCategorias; $i++) { 
+                                            $categoria = $categories[$i];
+                                            if($idCategoriaPost == $categoria->idCategory){
+                                                $nombreCategory = $categoria->nameCategory;
+                                            }
+                                        }
                         @endphp
-                        <p class="text-gray-900 dark:text-white">Usuario: {{ $nombreUser }}</p>
-                        <h1 class="uppercase font-bold text-gray-900 dark:text-white text-left text-xl">{{ $post->titlePost }}</h1>
-                        <p class="whitespace-pre text-gray-900 dark:text-white text-justify">{{ $post->contentPost }}</p>
-                        <p class="text-gray-900 dark:text-white text-center">{{ $post->habilitated ? 'Habilitado' : 'No Habilitado' }}</p>
-                        <div class="mt-4">
-                            <form method="POST" action="{{ route('posts.eliminar', $post->idPost) }}" class="delete-post-form">
-                                @csrf
-                                <button type="button" class="bg-red-500 dark:bg-red-700 hover:bg-red-600 dark:hover:bg-red-800 text-white font-bold rounded px-5 py-2 delete-post-button">
-                                    Eliminar Post
-                                </button>
-                            </form>
+                        <p class="px-4 py-2 text-xs text-gray-900 dark:text-white text-left">{{$nombreCategory}}</p>
+                        <div class=" mb-4 rounded-b-lg">
+                            <p class="px-4 py-2 text-xs text-gray-900 dark:text-white text-left">Usuario: {{ $nombreUser }}</p>
+                            <h1 class="px-4 py-2 uppercase font-bold text-gray-900 dark:text-white text-left text-xl">{{ $post->titlePost }}</h1>
+                            <p class="whitespace-pre px-4 py-2 text-balance text-gray-900 dark:text-white text-justify">{{ $post->contentPost }}</p>
+                            <div class="mt-4">
+                                <form method="POST" action="{{ route('posts.eliminar', $post->idPost) }}" class="delete-post-form px-4">
+                                    @csrf
+                                    <button type="button" class="text-red-600 font-semibold rounded-full border border-red-600 hover:text-white hover:bg-red-600 hover:border-transparent focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-offset-2 px-5 py-2 delete-post-button">
+                                        Eliminar Post
+                                    </button>
+                                </form>
+                            </div>
                         </div>
-                    </div>
+                        
                 @endforeach
             </div>
         </div>
