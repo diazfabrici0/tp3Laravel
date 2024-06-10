@@ -78,10 +78,6 @@ class PostController extends Controller
          return view('posts.show', compact('post', 'users', 'categories'));
     }
 
-    public function getEdit($id){
-        return view('posts/edit', compact('id'));
-    }
-
     public function eliminar($postId){
         $post = Post::findOrFail($postId);
         $post->habilitated = false;

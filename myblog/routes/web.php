@@ -23,7 +23,6 @@ Route::controller(PostController::class)->group(function(){
     Route::get('posts/show/{post}', 'show')->name('posts.show');
     Route::get('posts/create', 'getCreate')->name('posts.create');
     Route::post('posts.create', 'store')->name('posts.store');
-    Route::get('posts/edit/{id}',  'getEdit')->name('posts.edit');
     Route::get('posts/myPosts', 'getMyPosts')->name('posts.myPosts');
     Route::post('posts/eliminar/{postId}', 'eliminar')->name('posts.eliminar'); 
 });
